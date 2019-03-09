@@ -1,0 +1,29 @@
+---
+- hosts: all
+  become: yes
+  become_method: sudo
+  gather_facts: no
+  connection: ssh
+  ignore_errors: yes
+  tasks:
+    - name: new tasks
+      package:
+        name: httpd
+        state: installed
+
+    - name: Add user
+      user: 
+        name: bob
+        state: present
+
+    - name: add Group
+      group:
+        name: managers
+        state: present
+
+    - name: Create file
+      file:
+        path: /tmp/testfile
+        state: touch
+        node: 0755
+        group: bob
